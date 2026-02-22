@@ -1,0 +1,87 @@
+<!-- 
+  CODE À COPIER-COLLER DANS WEBFLOW
+  ===================================
+  
+  Instructions :
+  1. Dans Webflow, créez une page "Simulateur"
+  2. Ajoutez un élément "Embed" (HTML Embed)
+  3. Collez ce code complet
+  4. Remplacez "https://votre-app.vercel.app" par votre URL Vercel réelle
+  5. Publiez la page
+  
+  Note : Ce code est responsive et s'adapte automatiquement à la taille de l'écran
+-->
+
+<div class="simulateur-container">
+  <iframe 
+    id="simulateur-iframe"
+    src="https://votre-app.vercel.app/simulateur?embed=1"
+    frameborder="0"
+    scrolling="no"
+    style="width: 100%; min-height: 100vh; border: none; display: block;"
+    allow="clipboard-write"
+    title="Simulateur de devis"
+  ></iframe>
+</div>
+
+<style>
+  .simulateur-container {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #simulateur-iframe {
+    width: 100%;
+    min-height: 100vh;
+    border: none;
+    display: block;
+  }
+
+  /* Responsive mobile */
+  @media (max-width: 768px) {
+    #simulateur-iframe {
+      min-height: 120vh; /* Un peu plus haut sur mobile */
+    }
+  }
+
+  /* Fallback si iframe bloqué */
+  .simulateur-container::before {
+    content: "Le simulateur nécessite JavaScript. Veuillez activer JavaScript dans votre navigateur.";
+    display: none;
+    padding: 2rem;
+    text-align: center;
+    background: #f5f5f5;
+    border-radius: 8px;
+    margin: 2rem;
+  }
+</style>
+
+<script>
+  // Ajuster la hauteur de l'iframe automatiquement
+  (function() {
+    const iframe = document.getElementById('simulateur-iframe');
+    if (!iframe) return;
+
+    // Fallback : ajuster la hauteur après chargement
+    iframe.addEventListener('load', function() {
+      try {
+        // Essayer d'accéder à la hauteur du contenu (nécessite même origine ou CORS)
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        if (iframeDoc) {
+          const height = Math.max(
+            iframeDoc.body.scrollHeight,
+            iframeDoc.body.offsetHeight,
+            iframeDoc.documentElement.clientHeight,
+            iframeDoc.documentElement.scrollHeight,
+            iframeDoc.documentElement.offsetHeight
+          );
+          iframe.style.height = height + 'px';
+        }
+      } catch (e) {
+        // Cross-origin : utiliser une hauteur fixe ou min-height
+        iframe.style.minHeight = '100vh';
+      }
+    });
+  })();
+</script>
