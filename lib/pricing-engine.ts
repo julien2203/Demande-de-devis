@@ -7,8 +7,8 @@ import {
 } from "./types";
 import pricingConfigData from "@/data/pricing-config.json";
 
-const pricingRules = pricingRulesData as PricingRulesData;
-const pricingConfig = pricingConfigData as PricingConfig;
+const pricingRules = pricingRulesData as unknown as PricingRulesData;
+const pricingConfig = pricingConfigData as unknown as PricingConfig;
 
 export class PricingEngine {
   private rules: PricingRulesData;

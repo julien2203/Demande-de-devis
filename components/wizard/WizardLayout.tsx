@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { ProgressBar } from "./ProgressBar";
 import { Card, CardContent } from "@/components/ui/card";
@@ -11,7 +11,7 @@ interface WizardLayoutProps {
   totalSteps: number;
 }
 
-export function WizardLayout({
+function WizardLayoutContent({
   children,
   currentStep,
   totalSteps,
@@ -58,5 +58,26 @@ export function WizardLayout({
         </Card>
       </div>
     </div>
+  );
+}
+
+export function WizardLayout(props: WizardLayoutProps) {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/20">
+        <div className="container mx-auto px-4 py-8 max-w-3xl">
+          <div className="mb-8">
+            <ProgressBar currentStep={props.currentStep} totalSteps={props.totalSteps} />
+          </div>
+          <Card className="min-h-[400px]">
+            <CardContent className="p-8">
+              {props.children}
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    }>
+      <WizardLayoutContent {...props} />
+    </Suspense>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,7 +10,7 @@ import { DeterministicPricingResult, WizardAnswers } from "@/lib/types";
 import { CheckCircle2, Mail, Phone, ArrowLeft, Loader2, CheckCircle } from "lucide-react";
 import Link from "next/link";
 
-export default function ResultatPage() {
+function ResultatPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const isEmbed = searchParams?.get("embed") === "1" || searchParams?.get("theme") === "light";
@@ -321,5 +321,19 @@ export default function ResultatPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ResultatPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-muted-foreground">Chargement...</p>
+        </div>
+      </div>
+    }>
+      <ResultatPageContent />
+    </Suspense>
   );
 }
