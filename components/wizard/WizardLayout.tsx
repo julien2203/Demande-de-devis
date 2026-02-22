@@ -21,29 +21,29 @@ function WizardLayoutContent({
 
   if (isEmbed) {
     return (
-      <div className="bg-background">
-        <div className="container mx-auto px-4 py-4 max-w-3xl">
-          <div className="mb-4">
+      <main className="min-h-screen bg-[hsl(var(--bg))]">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 max-w-[1000px]">
+          <div className="mb-6">
             <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
           </div>
 
-          <Card className="min-h-[400px]">
-            <CardContent className="p-6">
+          <Card className="bg-card border-card-border shadow-card rounded-xl min-h-[500px]">
+            <CardContent className="p-6 sm:p-8 lg:p-10">
               {children}
             </CardContent>
           </Card>
         </div>
-      </div>
+      </main>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/20">
-      <div className="container mx-auto px-4 py-8 max-w-3xl">
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2">Simulateur de Devis</h1>
-          <p className="text-muted-foreground">
-            Répondez à quelques questions pour obtenir une estimation
+    <main className="min-h-screen bg-[hsl(var(--bg))]">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 max-w-[1000px]">
+        <div className="mb-10 sm:mb-12 text-center">
+          <h1 className="mb-4">Simulateur de Devis</h1>
+          <p className="text-subtitle max-w-2xl mx-auto">
+            Répondez à quelques questions pour obtenir une estimation personnalisée
           </p>
         </div>
 
@@ -51,31 +51,31 @@ function WizardLayoutContent({
           <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
         </div>
 
-        <Card className="min-h-[400px]">
-          <CardContent className="p-8">
+        <Card className="bg-card border-card-border shadow-card rounded-xl min-h-[500px]">
+          <CardContent className="p-6 sm:p-8 lg:p-10">
             {children}
           </CardContent>
         </Card>
       </div>
-    </div>
+    </main>
   );
 }
 
 export function WizardLayout(props: WizardLayoutProps) {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/20">
-        <div className="container mx-auto px-4 py-8 max-w-3xl">
+      <main className="min-h-screen bg-[hsl(var(--bg))]">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 max-w-[1000px]">
           <div className="mb-8">
             <ProgressBar currentStep={props.currentStep} totalSteps={props.totalSteps} />
           </div>
-          <Card className="min-h-[400px]">
-            <CardContent className="p-8">
+          <Card className="bg-card border-card-border shadow-card rounded-xl min-h-[500px]">
+            <CardContent className="p-6 sm:p-8 lg:p-10">
               {props.children}
             </CardContent>
           </Card>
         </div>
-      </div>
+      </main>
     }>
       <WizardLayoutContent {...props} />
     </Suspense>

@@ -28,27 +28,27 @@ export function StepRenderer({
       case "radio":
         return (
           <RadioGroup value={value} onValueChange={onChange}>
-            <div className="space-y-4">
+            <div className="space-y-3">
               {question.options?.map((option) => (
                 <div
                   key={option.value}
-                  className="flex items-start space-x-3 rounded-lg border border-input p-4 hover:bg-accent/50 transition-colors cursor-pointer"
+                  className="flex items-start space-x-4 rounded-xl border-2 border-input bg-card p-5 hover:border-ring hover:shadow-soft transition-all cursor-pointer group"
                   onClick={() => onChange(option.value)}
                 >
                   <RadioGroupItem
                     value={option.value}
                     id={option.value}
-                    className="mt-1"
+                    className="mt-0.5 flex-shrink-0"
                   />
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
                     <Label
                       htmlFor={option.value}
-                      className="text-base font-medium cursor-pointer"
+                      className="text-base font-semibold cursor-pointer text-foreground block"
                     >
                       {option.label}
                     </Label>
                     {option.description && (
-                      <p className="text-sm text-muted-foreground mt-1">
+                      <p className="text-sm text-muted-foreground mt-1.5 leading-relaxed">
                         {option.description}
                       </p>
                     )}
@@ -62,7 +62,7 @@ export function StepRenderer({
       case "select":
         return (
           <Select value={value} onValueChange={onChange}>
-            <SelectTrigger className="w-full h-12 text-base">
+            <SelectTrigger className="w-full">
               <SelectValue placeholder="Sélectionnez une option" />
             </SelectTrigger>
             <SelectContent>
@@ -92,7 +92,6 @@ export function StepRenderer({
             type={inputType}
             value={value}
             onChange={(e) => onChange(e.target.value)}
-            className="h-12 text-base"
             placeholder={placeholder}
           />
         );
@@ -103,7 +102,6 @@ export function StepRenderer({
             type="number"
             value={value}
             onChange={(e) => onChange(e.target.value)}
-            className="h-12 text-base"
             placeholder="Votre réponse..."
           />
         );
@@ -114,9 +112,13 @@ export function StepRenderer({
   };
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-3xl font-bold tracking-tight">{question.label}</h2>
-      {renderInput()}
+    <div className="space-y-8 animate-in fade-in-0 slide-in-from-4 duration-300">
+      <div>
+        <h2 className="mb-3">{question.label}</h2>
+      </div>
+      <div>
+        {renderInput()}
+      </div>
     </div>
   );
 }

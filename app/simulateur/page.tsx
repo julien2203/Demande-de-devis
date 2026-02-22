@@ -108,23 +108,25 @@ export default function SimulateurPage() {
       totalSteps={questions.length}
     >
       <div className="flex flex-col h-full">
-        <div className="flex-1 mb-8">
+        <div className="flex-1 mb-10">
           <StepRenderer
             question={currentQuestion}
             value={currentAnswer}
             onChange={handleAnswer}
           />
           {error && (
-            <p className="text-sm text-destructive mt-4">{error}</p>
+            <div className="mt-6 p-4 rounded-lg bg-destructive/10 border border-destructive/20">
+              <p className="text-sm text-destructive font-medium">{error}</p>
+            </div>
           )}
         </div>
 
-        <div className="flex justify-between items-center pt-6 border-t">
+        <div className="flex justify-between items-center gap-4 pt-8 border-t border-border">
           <Button
             variant="outline"
             onClick={handlePrevious}
             disabled={currentStep === 0}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 min-w-[140px]"
           >
             <ArrowLeft className="h-4 w-4" />
             Précédent
@@ -133,7 +135,8 @@ export default function SimulateurPage() {
           <Button
             onClick={handleNext}
             disabled={!canProceed}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 min-w-[140px]"
+            size="lg"
           >
             {currentStep === questions.length - 1 ? "Voir le résultat" : "Suivant"}
             <ArrowRight className="h-4 w-4" />
