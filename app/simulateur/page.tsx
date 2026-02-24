@@ -115,9 +115,9 @@ export default function SimulateurPage() {
             onChange={handleAnswer}
           />
           {error && (
-            <div className="mt-6 p-4 rounded-lg bg-destructive/10 border border-destructive/20">
-              <p className="text-sm text-destructive font-medium">{error}</p>
-            </div>
+            <p className="mt-3 text-sm text-destructive">
+              {error}
+            </p>
           )}
         </div>
 

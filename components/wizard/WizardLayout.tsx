@@ -2,8 +2,7 @@
 
 import { ReactNode, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { ProgressBar } from "./ProgressBar";
-import { Card, CardContent } from "@/components/ui/card";
+import { QuoteCard } from "@/components/quote/QuoteCard";
 
 interface WizardLayoutProps {
   children: ReactNode;
@@ -21,41 +20,20 @@ function WizardLayoutContent({
 
   if (isEmbed) {
     return (
-      <main className="min-h-screen bg-[hsl(var(--bg))]">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 max-w-[1000px]">
-          <div className="mb-6">
-            <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
-          </div>
-
-          <Card className="bg-card border-card-border shadow-card rounded-xl min-h-[500px]">
-            <CardContent className="p-6 sm:p-8 lg:p-10">
-              {children}
-            </CardContent>
-          </Card>
-        </div>
-      </main>
+      <div className="w-full">
+        <QuoteCard currentStep={currentStep} totalSteps={totalSteps}>
+          {children}
+        </QuoteCard>
+      </div>
     );
   }
 
   return (
-    <main className="min-h-screen bg-[hsl(var(--bg))]">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 max-w-[1000px]">
-        <div className="mb-10 sm:mb-12 text-center">
-          <h1 className="mb-4">Simulateur de Devis</h1>
-          <p className="text-subtitle max-w-2xl mx-auto">
-            Répondez à quelques questions pour obtenir une estimation personnalisée
-          </p>
-        </div>
-
-        <div className="mb-8">
-          <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
-        </div>
-
-        <Card className="bg-card border-card-border shadow-card rounded-xl min-h-[500px]">
-          <CardContent className="p-6 sm:p-8 lg:p-10">
-            {children}
-          </CardContent>
-        </Card>
+    <main className="min-h-screen bg-[hsl(var(--bg-secondary))] flex items-center justify-center">
+      <div className="max-w-[900px] w-full px-4 py-12 sm:py-16 lg:py-20">
+        <QuoteCard currentStep={currentStep} totalSteps={totalSteps}>
+          {children}
+        </QuoteCard>
       </div>
     </main>
   );
@@ -63,20 +41,20 @@ function WizardLayoutContent({
 
 export function WizardLayout(props: WizardLayoutProps) {
   return (
-    <Suspense fallback={
-      <main className="min-h-screen bg-[hsl(var(--bg))]">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 max-w-[1000px]">
-          <div className="mb-8">
-            <ProgressBar currentStep={props.currentStep} totalSteps={props.totalSteps} />
-          </div>
-          <Card className="bg-card border-card-border shadow-card rounded-xl min-h-[500px]">
-            <CardContent className="p-6 sm:p-8 lg:p-10">
+    <Suspense
+      fallback={
+        <main className="min-h-screen bg-[hsl(var(--bg-secondary))] flex items-center justify-center">
+          <div className="max-w-[900px] w-full px-4 py-12 sm:py-16 lg:py-20">
+            <QuoteCard
+              currentStep={props.currentStep}
+              totalSteps={props.totalSteps}
+            >
               {props.children}
-            </CardContent>
-          </Card>
-        </div>
-      </main>
-    }>
+            </QuoteCard>
+          </div>
+        </main>
+      }
+    >
       <WizardLayoutContent {...props} />
     </Suspense>
   );

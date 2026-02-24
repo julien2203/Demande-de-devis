@@ -7,21 +7,23 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary-hover shadow-soft hover:shadow-hover rounded-pill",
+        default:
+          "bg-primary text-primary-foreground hover:bg-primary-hover shadow-soft hover:shadow-hover rounded-[var(--radius-lg)]",
         destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded-pill shadow-soft",
+          "bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded-[var(--radius-lg)] shadow-soft",
         outline:
-          "border-2 border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-pill",
+          "border-2 border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-[var(--radius-lg)]",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80 rounded-pill",
-        ghost: "hover:bg-accent hover:text-accent-foreground rounded-pill",
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80 rounded-[var(--radius-lg)]",
+        ghost:
+          "hover:bg-accent hover:text-accent-foreground rounded-[var(--radius-lg)]",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
         default: "h-12 px-6 text-base",
-        sm: "h-10 px-4 text-sm rounded-pill",
-        lg: "h-14 px-10 text-lg rounded-pill",
-        icon: "h-12 w-12 rounded-pill",
+        sm: "h-10 px-4 text-sm",
+        lg: "h-12 px-8 text-base",
+        icon: "h-12 w-12",
       },
     },
     defaultVariants: {

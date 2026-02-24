@@ -1,8 +1,7 @@
 "use client";
 
 import { Question } from "@/lib/types";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
+import { ChoiceCardGroup } from "@/components/quote/ChoiceCardGroup";
 import {
   Select,
   SelectContent,
@@ -27,36 +26,11 @@ export function StepRenderer({
     switch (question.type) {
       case "radio":
         return (
-          <RadioGroup value={value} onValueChange={onChange}>
-            <div className="space-y-3">
-              {question.options?.map((option) => (
-                <div
-                  key={option.value}
-                  className="flex items-start space-x-4 rounded-xl border-2 border-input bg-card p-5 hover:border-ring hover:shadow-soft transition-all cursor-pointer group"
-                  onClick={() => onChange(option.value)}
-                >
-                  <RadioGroupItem
-                    value={option.value}
-                    id={option.value}
-                    className="mt-0.5 flex-shrink-0"
-                  />
-                  <div className="flex-1 min-w-0">
-                    <Label
-                      htmlFor={option.value}
-                      className="text-base font-semibold cursor-pointer text-foreground block"
-                    >
-                      {option.label}
-                    </Label>
-                    {option.description && (
-                      <p className="text-sm text-muted-foreground mt-1.5 leading-relaxed">
-                        {option.description}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </RadioGroup>
+          <ChoiceCardGroup
+            options={question.options ?? []}
+            value={value}
+            onChange={onChange}
+          />
         );
 
       case "select":
@@ -114,7 +88,9 @@ export function StepRenderer({
   return (
     <div className="space-y-8 animate-in fade-in-0 slide-in-from-4 duration-300">
       <div>
-        <h2 className="mb-3">{question.label}</h2>
+        <h2 className="mb-3 text-[clamp(1.375rem,3vw,2rem)] font-semibold leading-tight">
+          {question.label}
+        </h2>
       </div>
       <div>
         {renderInput()}
