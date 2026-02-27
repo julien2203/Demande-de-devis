@@ -13,13 +13,17 @@ interface ChoiceCardGroupProps {
   options: ChoiceOption[];
   value: string;
   onChange: (value: string) => void;
+  multiple?: boolean;
 }
 
 export function ChoiceCardGroup({
   options,
   value,
   onChange,
+  multiple = false,
 }: ChoiceCardGroupProps) {
+  const selectedValues = multiple && value ? value.split(",") : [value];
+
   return (
     <RadioGroup
       value={value}
@@ -27,7 +31,9 @@ export function ChoiceCardGroup({
       className="grid gap-3"
     >
       {options.map((option) => {
-        const isSelected = value === option.value;
+        const isSelected = multiple
+          ? selectedValues.includes(option.value)
+          : value === option.value;
 
         return (
           <label
@@ -39,7 +45,11 @@ export function ChoiceCardGroup({
               isSelected &&
                 "border-primary bg-primary/5 ring-2 ring-primary/15 hover:bg-primary/7"
             )}
-          >
+            onClick={(event) => {
+              event.preventDefault();
+              onChange(option.value);
+            }}
+            >
             <RadioGroupItem
               id={option.value}
               value={option.value}

@@ -22,6 +22,11 @@
           "description": "Application métier sur mesure"
         },
         {
+          "value": "app-mobile",
+          "label": "Application mobile",
+          "description": "iOS/Android, notifications, comptes, etc."
+        },
+        {
           "value": "refonte",
           "label": "Refonte de site existant",
           "description": "Modernisation et amélioration d'un site actuel"
@@ -33,6 +38,7 @@
       "type": "select",
       "label": "Combien de pages souhaitez-vous ?",
       "required": true,
+      "visibleFor": ["site-vitrine", "ecommerce", "application-web", "refonte"],
       "options": [
         {
           "value": "1-5",
@@ -49,6 +55,66 @@
         {
           "value": "20+",
           "label": "Plus de 20 pages"
+        }
+      ]
+    },
+    {
+      "id": "content-level",
+      "type": "select",
+      "label": "Quel est le niveau de contenu à prévoir ?",
+      "required": true,
+      "options": [
+        {
+          "value": "fourni",
+          "label": "Le contenu est principalement fourni"
+        },
+        {
+          "value": "a-produire",
+          "label": "Le contenu est principalement à produire"
+        },
+        {
+          "value": "mixte",
+          "label": "Un mixte entre contenu fourni et à produire"
+        }
+      ]
+    },
+    {
+      "id": "content-complexity",
+      "type": "radio",
+      "label": "Quel est le niveau de complexité des contenus ?",
+      "required": true,
+      "options": [
+        {
+          "value": "simple",
+          "label": "Simple (pages courtes, peu de variations)"
+        },
+        {
+          "value": "standard",
+          "label": "Standard (contenus marketing / présentation)"
+        },
+        {
+          "value": "complexe",
+          "label": "Complexe (rédaction technique, nombreux cas métiers)"
+        }
+      ]
+    },
+    {
+      "id": "workshops",
+      "type": "radio",
+      "label": "Souhaitez-vous des ateliers de cadrage ?",
+      "required": true,
+      "options": [
+        {
+          "value": "aucun",
+          "label": "Aucun atelier (cadrage asynchrone)"
+        },
+        {
+          "value": "1-atelier",
+          "label": "1 atelier de cadrage (1h)"
+        },
+        {
+          "value": "2-3-ateliers",
+          "label": "2 à 3 ateliers (roadmap, priorisation, parcours)"
         }
       ]
     },
@@ -77,6 +143,7 @@
       "type": "radio",
       "label": "Quelles fonctionnalités sont nécessaires ?",
       "required": true,
+      "visibleFor": ["site-vitrine", "ecommerce", "application-web", "refonte"],
       "options": [
         {
           "value": "basique",
@@ -90,6 +157,40 @@
           "value": "avance",
           "label": "Avancé (API, authentification, paiement)"
         }
+      ]
+    },
+    {
+      "id": "multi-lang",
+      "type": "select",
+      "label": "Combien de langues doivent être gérées ?",
+      "required": true,
+      "options": [
+        {
+          "value": "1",
+          "label": "1 langue"
+        },
+        {
+          "value": "2",
+          "label": "2 langues"
+        },
+        {
+          "value": "3+",
+          "label": "3 langues ou plus"
+        }
+      ]
+    },
+    {
+      "id": "tool-connections",
+      "type": "multi-select",
+      "label": "À quels outils l'application doit-elle se connecter ?",
+      "required": false,
+      "options": [
+        { "value": "crm", "label": "CRM" },
+        { "value": "emailing", "label": "Emailing" },
+        { "value": "paiement", "label": "Paiement" },
+        { "value": "logistique", "label": "Logistique" },
+        { "value": "agenda", "label": "Agenda" },
+        { "value": "notion-erp", "label": "Notion / ERP" }
       ]
     },
     {
@@ -133,6 +234,10 @@
         {
           "value": "25000+",
           "label": "Plus de 25 000 €"
+        },
+        {
+          "value": "je-ne-sais-pas",
+          "label": "Je ne sais pas encore"
         }
       ]
     },
@@ -141,6 +246,7 @@
       "type": "radio",
       "label": "Souhaitez-vous un référencement SEO ?",
       "required": true,
+      "visibleFor": ["site-vitrine", "ecommerce", "application-web", "refonte"],
       "options": [
         {
           "value": "oui-complet",
@@ -177,10 +283,335 @@
       ]
     },
     {
+      "id": "refonte-seo",
+      "type": "radio",
+      "label": "Pour une refonte, souhaitez-vous une migration SEO complète ?",
+      "required": false,
+      "visibleFor": ["refonte"],
+      "options": [
+        { "value": "oui", "label": "Oui, conserver les positions SEO" },
+        { "value": "non", "label": "Non, pas de migration spécifique" }
+      ]
+    },
+    {
+      "id": "refonte-content",
+      "type": "radio",
+      "label": "Souhaitez-vous une reprise / restructuration des contenus existants ?",
+      "required": false,
+      "visibleFor": ["refonte"],
+      "options": [
+        { "value": "oui", "label": "Oui, reprise et amélioration des contenus" },
+        { "value": "non", "label": "Non, contenus déjà prêts" }
+      ]
+    },
+    {
+      "id": "refonte-redesign",
+      "type": "radio",
+      "label": "La refonte inclut-elle un redesign complet ?",
+      "required": false,
+      "visibleFor": ["refonte"],
+      "options": [
+        { "value": "oui", "label": "Oui, nouveau design complet" },
+        { "value": "non", "label": "Non, évolution légère" }
+      ]
+    },
+    {
+      "id": "refonte-constraints",
+      "type": "radio",
+      "label": "Y a-t-il des contraintes techniques fortes (legacy, ERP, hébergement imposé) ?",
+      "required": false,
+      "visibleFor": ["refonte"],
+      "options": [
+        { "value": "non", "label": "Non, stack technique relativement libre" },
+        { "value": "oui", "label": "Oui, contraintes fortes à prendre en compte" }
+      ]
+    },
+    {
+      "id": "ecom-products",
+      "type": "select",
+      "label": "Combien de produits seront vendus en ligne ?",
+      "required": false,
+      "visibleFor": ["ecommerce"],
+      "options": [
+        { "value": "0-20", "label": "0 à 20 produits" },
+        { "value": "20-100", "label": "20 à 100 produits" },
+        { "value": "100-500", "label": "100 à 500 produits" },
+        { "value": "500+", "label": "500+ produits" }
+      ]
+    },
+    {
+      "id": "ecom-payment",
+      "type": "radio",
+      "label": "Quelle configuration de paiement prévoyez-vous ?",
+      "required": false,
+      "visibleFor": ["ecommerce"],
+      "options": [
+        { "value": "stripe", "label": "Paiement en ligne simple (Stripe/équivalent)" },
+        { "value": "multi", "label": "Plusieurs moyens de paiement / PSP" }
+      ]
+    },
+    {
+      "id": "ecom-shipping",
+      "type": "radio",
+      "label": "Comment gérez-vous la livraison ?",
+      "required": false,
+      "visibleFor": ["ecommerce"],
+      "options": [
+        { "value": "simple", "label": "Livraison simple (tarifs fixes / zones limitées)" },
+        { "value": "complexe", "label": "Livraison complexe (transporteurs, zones, règles)" }
+      ]
+    },
+    {
+      "id": "ecom-invoicing",
+      "type": "radio",
+      "label": "Souhaitez-vous une facturation automatisée ?",
+      "required": false,
+      "visibleFor": ["ecommerce"],
+      "options": [
+        { "value": "oui", "label": "Oui, génération de factures / avoirs" },
+        { "value": "non", "label": "Non, facturation gérée ailleurs" }
+      ]
+    },
+    {
+      "id": "web-templates",
+      "type": "radio",
+      "label": "Combien de gabarits de pages distincts pensez-vous avoir ?",
+      "required": false,
+      "visibleFor": ["site-vitrine", "ecommerce", "application-web", "refonte"],
+      "options": [
+        { "value": "1-2", "label": "1 à 2 gabarits (pages assez homogènes)" },
+        { "value": "3-5", "label": "3 à 5 gabarits (layouts variés)" },
+        { "value": "6+", "label": "6+ gabarits (beaucoup de cas spécifiques)" }
+      ]
+    },
+    {
+      "id": "cms-needed",
+      "type": "radio",
+      "label": "Avez-vous besoin d'un CMS pour gérer les contenus ?",
+      "required": false,
+      "visibleFor": ["site-vitrine", "ecommerce", "application-web", "refonte"],
+      "options": [
+        { "value": "non", "label": "Non, contenu plutôt fixe" },
+        { "value": "oui-simple", "label": "Oui, CMS simple (pages, articles)" },
+        { "value": "oui-avance", "label": "Oui, CMS avancé (types de contenu complexes)" }
+      ]
+    },
+    {
+      "id": "qa-level",
+      "type": "radio",
+      "label": "Quel niveau de QA / tests souhaitez-vous ?",
+      "required": true,
+      "options": [
+        {
+          "value": "basique",
+          "label": "Basique (tests principaux, navigation)"
+        },
+        {
+          "value": "standard",
+          "label": "Standard (desktop + mobile, cas principaux)"
+        },
+        {
+          "value": "renforce",
+          "label": "Renforcé (multi devices, cas limites, scénarios détaillés)"
+        }
+      ]
+    },
+    {
+      "id": "training",
+      "type": "radio",
+      "label": "Souhaitez-vous une formation à l'outil ?",
+      "required": true,
+      "options": [
+        {
+          "value": "aucune",
+          "label": "Aucune formation prévue"
+        },
+        {
+          "value": "1h",
+          "label": "Session de 1h (prise en main)"
+        },
+        {
+          "value": "2-3h",
+          "label": "2 à 3h (formation équipe / admin)"
+        }
+      ]
+    },
+    {
+      "id": "mobile-screens",
+      "type": "select",
+      "label": "Combien d'écrans composera l'application mobile ?",
+      "required": false,
+      "visibleFor": ["app-mobile"],
+      "options": [
+        { "value": "1-5", "label": "1 à 5 écrans" },
+        { "value": "6-10", "label": "6 à 10 écrans" },
+        { "value": "11-20", "label": "11 à 20 écrans" },
+        { "value": "21-40", "label": "21 à 40 écrans" },
+        { "value": "40+", "label": "Plus de 40 écrans" }
+      ]
+    },
+    {
+      "id": "mobile-stack",
+      "type": "radio",
+      "label": "Quelle stack technique envisagez-vous pour l'application ?",
+      "required": false,
+      "visibleFor": ["app-mobile"],
+      "options": [
+        { "value": "cross-platform", "label": "Cross-platform (React Native, Flutter...)" },
+        { "value": "natif", "label": "Natif (iOS + Android)" }
+      ]
+    },
+    {
+      "id": "mobile-platforms",
+      "type": "select",
+      "label": "Sur quelles plateformes l'application doit-elle être disponible ?",
+      "required": false,
+      "visibleFor": ["app-mobile"],
+      "options": [
+        { "value": "ios", "label": "iOS" },
+        { "value": "android", "label": "Android" },
+        { "value": "ios-android", "label": "iOS + Android" }
+      ]
+    },
+    {
+      "id": "mobile-auth",
+      "type": "select",
+      "label": "Comment les utilisateurs se connectent-ils ?",
+      "required": false,
+      "visibleFor": ["app-mobile"],
+      "options": [
+        { "value": "none", "label": "Aucun compte" },
+        { "value": "email-password", "label": "Email + mot de passe" },
+        {
+          "value": "sso",
+          "label": "SSO (Google / Apple / Facebook)"
+        }
+      ]
+    },
+    {
+      "id": "mobile-roles",
+      "type": "radio",
+      "label": "Avez-vous besoin de rôles et permissions spécifiques ?",
+      "required": false,
+      "visibleFor": ["app-mobile"],
+      "options": [
+        { "value": "aucun", "label": "Aucun rôle particulier" },
+        { "value": "utilisateurs", "label": "Utilisateurs connectés" },
+        { "value": "admin-roles", "label": "Admins + rôles / permissions avancées" }
+      ]
+    },
+    {
+      "id": "mobile-features",
+      "type": "multi-select",
+      "label": "Quelles fonctionnalités clés sont nécessaires ?",
+      "required": false,
+      "visibleFor": ["app-mobile"],
+      "options": [
+        { "value": "paiement", "label": "Paiement" },
+        { "value": "notifications-push", "label": "Notifications push" },
+        { "value": "geolocalisation", "label": "Géolocalisation / carte" },
+        { "value": "chat", "label": "Chat / messagerie" },
+        { "value": "upload-media", "label": "Upload média (photos/vidéos)" },
+        { "value": "reservation", "label": "Réservation / planning" }
+      ]
+    },
+    {
+      "id": "mobile-content",
+      "type": "select",
+      "label": "Comment le contenu de l'application sera-t-il géré ?",
+      "required": false,
+      "visibleFor": ["app-mobile"],
+      "options": [
+        { "value": "fixe", "label": "Contenu fixe" },
+        {
+          "value": "backoffice",
+          "label": "Contenu dynamique via back-office"
+        },
+        {
+          "value": "si-erp",
+          "label": "Synchronisation avec un SI / ERP existant"
+        }
+      ]
+    },
+    {
+      "id": "mobile-backoffice",
+      "type": "select",
+      "label": "Souhaitez-vous un back-office d'administration ?",
+      "required": false,
+      "visibleFor": ["app-mobile"],
+      "options": [
+        { "value": "none", "label": "Aucun" },
+        {
+          "value": "simple",
+          "label": "Simple (gestion contenu / utilisateurs)"
+        },
+        {
+          "value": "avance",
+          "label": "Avancé (rôles, modération, exports, workflows)"
+        }
+      ]
+    },
+    {
+      "id": "mobile-offline",
+      "type": "select",
+      "label": "Avez-vous besoin de fonctionnalités offline ?",
+      "required": false,
+      "visibleFor": ["app-mobile"],
+      "options": [
+        { "value": "non", "label": "Non" },
+        { "value": "partiel", "label": "Partiel (cache)" },
+        { "value": "oui", "label": "Oui (mode offline réel)" }
+      ]
+    },
+    {
+      "id": "mobile-design",
+      "type": "select",
+      "label": "Quel niveau de design UI souhaitez-vous pour l'application ?",
+      "required": false,
+      "visibleFor": ["app-mobile"],
+      "options": [
+        { "value": "template", "label": "Template" },
+        { "value": "sur-mesure", "label": "UI sur-mesure" },
+        {
+          "value": "design-system",
+          "label": "UI sur-mesure + design system"
+        }
+      ]
+    },
+    {
+      "id": "mobile-analytics",
+      "type": "select",
+      "label": "Quel niveau de suivi analytics souhaitez-vous ?",
+      "required": false,
+      "visibleFor": ["app-mobile"],
+      "options": [
+        { "value": "basique", "label": "Basique" },
+        {
+          "value": "avance",
+          "label": "Avancé (events, funnels)"
+        }
+      ]
+    },
+    {
+      "id": "mobile-post-launch",
+      "type": "multi-select",
+      "label": "Après la mise en ligne, quelles prestations vous intéressent ?",
+      "required": false,
+      "visibleFor": ["app-mobile"],
+      "options": [
+        { "value": "maintenance-corrective", "label": "Maintenance corrective" },
+        { "value": "maintenance-evolutive", "label": "Maintenance évolutive" },
+        { "value": "rapports-statistiques", "label": "Rapports statistiques" },
+        { "value": "ab-testing", "label": "A/B testing / heatmap" },
+        { "value": "campagnes-publicitaires", "label": "Campagnes publicitaires" }
+      ]
+    },
+    {
       "id": "hebergement",
       "type": "radio",
       "label": "Avez-vous déjà un hébergement ?",
       "required": true,
+      "visibleFor": ["site-vitrine", "ecommerce", "application-web", "refonte"],
       "options": [
         {
           "value": "oui",
@@ -197,6 +628,7 @@
       "type": "radio",
       "label": "Avez-vous déjà un nom de domaine ?",
       "required": true,
+      "visibleFor": ["site-vitrine", "ecommerce", "application-web", "refonte"],
       "options": [
         {
           "value": "oui",

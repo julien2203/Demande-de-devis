@@ -32,6 +32,7 @@ const PRESTATION_MAP: Record<string, string> = {
   "site-vitrine": "Site vitrine",
   ecommerce: "E-commerce",
   "application-web": "Application Web",
+  "app-mobile": "Application mobile",
   refonte: "Refonte",
 };
 
@@ -41,6 +42,7 @@ const BUDGET_MAP: Record<string, string> = {
   "5000-10000": "5 000€ – 10 000€",
   "10000-25000": "10 000€ – 25 000€",
   "25000+": "25 000€+",
+  "je-ne-sais-pas": "Je ne sais pas",
 };
 
 // Mapping de l'urgence

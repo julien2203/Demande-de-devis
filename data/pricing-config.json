@@ -3,7 +3,8 @@
     "site-vitrine": 2500,
     "ecommerce": 5000,
     "application-web": 8000,
-    "refonte": 3000
+    "refonte": 3000,
+    "app-mobile": 12000
   },
   "addOns": {
     "design": {
@@ -26,6 +27,24 @@
       "intermediaire": { "min": 1000, "max": 2000 },
       "avance": { "min": 3000, "max": 6000 }
     },
+    "contentLevel": {
+      "fourni": { "min": 0, "max": 0 },
+      "a-produire": { "min": 1500, "max": 3000 },
+      "mixte": { "min": 800, "max": 2000 }
+    },
+    "multiLang": {
+      "1": { "min": 0, "max": 0 },
+      "2": { "min": 800, "max": 1500 },
+      "3+": { "min": 1500, "max": 3000 }
+    },
+    "toolConnections": {
+      "crm": { "min": 800, "max": 1500 },
+      "emailing": { "min": 400, "max": 800 },
+      "paiement": { "min": 1000, "max": 2000 },
+      "logistique": { "min": 1200, "max": 2500 },
+      "agenda": { "min": 500, "max": 1200 },
+      "notion-erp": { "min": 1500, "max": 3000 }
+    },
     "seo": {
       "oui-complet": { "min": 1500, "max": 3000 },
       "oui-basique": { "min": 500, "max": 1000 },
@@ -39,10 +58,66 @@
       "urgent": { "min": 1000, "max": 2000 },
       "normal": { "min": 0, "max": 0 },
       "flexible": { "min": -500, "max": -200 }
+    },
+    "mobileScreens": {
+      "1-5": { "min": 0, "max": 0 },
+      "6-10": { "min": 2000, "max": 4000 },
+      "11-20": { "min": 4000, "max": 7000 },
+      "21-40": { "min": 7000, "max": 12000 },
+      "40+": { "min": 12000, "max": 20000 }
+    },
+    "mobilePlatforms": {
+      "ios": { "min": 0, "max": 0 },
+      "android": { "min": 0, "max": 0 },
+      "ios-android": { "min": 4000, "max": 8000 }
+    },
+    "mobileAuth": {
+      "none": { "min": 0, "max": 0 },
+      "email-password": { "min": 1500, "max": 3000 },
+      "sso": { "min": 3000, "max": 6000 }
+    },
+    "mobileFeatures": {
+      "paiement": { "min": 2500, "max": 5000 },
+      "notifications-push": { "min": 800, "max": 1600 },
+      "geolocalisation": { "min": 1500, "max": 3000 },
+      "chat": { "min": 2000, "max": 4000 },
+      "upload-media": { "min": 1500, "max": 3500 },
+      "reservation": { "min": 2500, "max": 5000 }
+    },
+    "mobileContent": {
+      "fixe": { "min": 0, "max": 0 },
+      "backoffice": { "min": 3000, "max": 6000 },
+      "si-erp": { "min": 5000, "max": 9000 }
+    },
+    "mobileBackoffice": {
+      "none": { "min": 0, "max": 0 },
+      "simple": { "min": 2500, "max": 5000 },
+      "avance": { "min": 6000, "max": 12000 }
+    },
+    "mobileOffline": {
+      "non": { "min": 0, "max": 0 },
+      "partiel": { "min": 2000, "max": 4000 },
+      "oui": { "min": 5000, "max": 9000 }
+    },
+    "mobileDesign": {
+      "template": { "min": 0, "max": 0 },
+      "sur-mesure": { "min": 3000, "max": 6000 },
+      "design-system": { "min": 6000, "max": 12000 }
+    },
+    "mobileAnalytics": {
+      "basique": { "min": 500, "max": 1200 },
+      "avance": { "min": 1500, "max": 3000 }
+    },
+    "mobilePostLaunch": {
+      "maintenance-corrective": { "min": 2000, "max": 4000 },
+      "maintenance-evolutive": { "min": 3000, "max": 6000 },
+      "rapports-statistiques": { "min": 1500, "max": 3000 },
+      "ab-testing": { "min": 2000, "max": 4000 },
+      "campagnes-publicitaires": { "min": 2500, "max": 5000 }
     }
   },
   "uncertaintyCoefficients": {
-    "min": 0.85,
-    "max": 1.25
+    "min": 0.92,
+    "max": 1.12
   }
 }

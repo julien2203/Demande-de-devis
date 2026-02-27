@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { WizardLayout } from "@/components/wizard/WizardLayout";
 import { StepRenderer } from "@/components/wizard/StepRenderer";
@@ -9,7 +9,7 @@ import { Question, WizardAnswers } from "@/lib/types";
 import questionsData from "@/data/questions.json";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
-const questions = (questionsData.questions as Question[]).slice(0, 12);
+const allQuestions = questionsData.questions as Question[];
 const STORAGE_KEY = "wizardAnswers";
 
 export default function SimulateurPage() {
@@ -30,6 +30,17 @@ export default function SimulateurPage() {
     return {};
   });
   const [error, setError] = useState<string>("");
+
+  const projectType = answers["type-projet"] || "";
+
+  const questions = useMemo(() => {
+    return allQuestions.filter((q) => {
+      if (q.id === "type-projet") return true;
+      if (!projectType) return false;
+      if (!q.visibleFor || q.visibleFor.length === 0) return true;
+      return q.visibleFor.includes(projectType);
+    });
+  }, [projectType]);
 
   const currentQuestion = questions[currentStep];
   const currentAnswer = answers[currentQuestion.id] || "";

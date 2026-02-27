@@ -184,5 +184,120 @@ describe("PricingEngine", () => {
       expect(result.min % 100).toBe(0);
       expect(result.max % 100).toBe(0);
     });
+
+    it("devrait calculer un prix pour une application mobile basique", () => {
+      const answers: WizardAnswers = {
+        "type-projet": "app-mobile",
+        "nombre-pages": "1-5",
+        design: "oui-complet",
+        fonctionnalites: "basique",
+        "content-level": "fourni",
+        "multi-lang": "1",
+        delai: "normal",
+        referencement: "non",
+        budget: "5000-10000",
+        "mobile-screens": "1-5",
+        "mobile-platforms": "ios",
+        "mobile-auth": "none",
+        "mobile-content": "fixe",
+        "mobile-backoffice": "none",
+        "mobile-offline": "non",
+        "mobile-design": "template",
+        "mobile-analytics": "basique",
+      };
+
+      const result = engine.calculateDeterministicPrice(answers);
+
+      expect(result.min).toBeGreaterThan(0);
+      expect(result.max).toBeGreaterThan(result.min);
+      const projectItem = result.breakdown.find((item) =>
+        item.label.includes("Application mobile")
+      );
+      expect(projectItem).toBeDefined();
+    });
+
+    it("devrait calculer un prix pour une application mobile complexe", () => {
+      const answers: WizardAnswers = {
+        "type-projet": "app-mobile",
+        "nombre-pages": "20+",
+        design: "non",
+        fonctionnalites: "avance",
+        "content-level": "a-produire",
+        "multi-lang": "3+",
+        "tool-connections": "crm,paiement,notion-erp",
+        delai: "urgent",
+        referencement: "oui-complet",
+        budget: "25000+",
+        "mobile-screens": "21-40",
+        "mobile-platforms": "ios-android",
+        "mobile-auth": "sso",
+        "mobile-features": "paiement,notifications-push,geolocalisation,chat",
+        "mobile-content": "si-erp",
+        "mobile-backoffice": "avance",
+        "mobile-offline": "oui",
+        "mobile-design": "design-system",
+        "mobile-analytics": "avance",
+        "mobile-post-launch":
+          "maintenance-corrective,maintenance-evolutive,rapports-statistiques,ab-testing,campagnes-publicitaires",
+      };
+
+      const result = engine.calculateDeterministicPrice(answers);
+
+      expect(result.min).toBeGreaterThan(15000);
+      expect(result.max).toBeGreaterThan(result.min);
+      expect(result.breakdown.length).toBeGreaterThan(8);
+    });
+
+    it("devrait avoir une fourchette resserrée quand les réponses sont complètes", () => {
+      const answers: WizardAnswers = {
+        "type-projet": "site-vitrine",
+        "nombre-pages": "6-10",
+        design: "oui-partiel",
+        fonctionnalites: "intermediaire",
+        "content-level": "mixte",
+        "multi-lang": "2",
+        "tool-connections": "crm,emailing",
+        delai: "normal",
+        referencement: "oui-basique",
+        budget: "5000-10000",
+      };
+
+      const result = engine.calculateDeterministicPrice(answers);
+
+      const ratio = result.max / result.min;
+      expect(ratio).toBeLessThan(1.25);
+    });
+
+    it("devrait élargir la fourchette si budget inconnu ou réponses manquantes", () => {
+      const baseAnswers: WizardAnswers = {
+        "type-projet": "site-vitrine",
+        "nombre-pages": "6-10",
+        design: "oui-partiel",
+        fonctionnalites: "intermediaire",
+        "content-level": "mixte",
+        "multi-lang": "2",
+        delai: "normal",
+        referencement: "oui-basique",
+      };
+
+      const withBudget: WizardAnswers = {
+        ...baseAnswers,
+        budget: "5000-10000",
+      };
+
+      const withoutBudget: WizardAnswers = {
+        ...baseAnswers,
+        budget: "je-ne-sais-pas",
+      };
+
+      const resultWithBudget = engine.calculateDeterministicPrice(withBudget);
+      const resultWithoutBudget =
+        engine.calculateDeterministicPrice(withoutBudget);
+
+      const ratioWith = resultWithBudget.max / resultWithBudget.min;
+      const ratioWithout = resultWithoutBudget.max / resultWithoutBudget.min;
+
+      expect(ratioWithout).toBeGreaterThanOrEqual(ratioWith);
+    });
   });
 });
