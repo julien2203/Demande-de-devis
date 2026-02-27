@@ -163,7 +163,11 @@ function ResultatPageContent() {
 
   if (isEmbed) {
     return (
-      <div className="w-full" ref={containerRef}>
+      <div
+        id="easyweb-result-root"
+        className="w-full"
+        ref={rootRef}
+      >
         <div className="bg-card border-card-border shadow-card rounded-xl p-8 sm:p-10 lg:p-12 space-y-10">
           {/* Hero avec estimation */}
           <div className="text-center space-y-6">
@@ -335,7 +339,7 @@ function ResultatPageContent() {
               </form>
             )}
 
-            {/* Pas de bouton \"Recommencer\" en mode embed */}
+            {/* Pas de bouton "Recommencer" en mode embed */}
           </div>
         </div>
       </div>
@@ -354,10 +358,7 @@ function ResultatPageContent() {
           </Link>
         </div>
 
-        <div
-          className="bg-card border-card-border shadow-card rounded-xl p-8 sm:p-10 lg:p-12 space-y-10"
-          ref={containerRef}
-        >
+        <div className="bg-card border-card-border shadow-card rounded-xl p-8 sm:p-10 lg:p-12 space-y-10">
           {/* Hero avec estimation */}
           <div className="text-center space-y-6">
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-2">
