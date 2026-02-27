@@ -31,7 +31,7 @@ function ResultatPageContent() {
     company: "",
   });
 
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const rootRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     // Récupérer les réponses depuis localStorage (uniquement côté client)
