@@ -119,7 +119,7 @@ export default function SimulateurPage() {
       totalSteps={questions.length}
     >
       <div className="flex flex-col h-full">
-        <div className="flex-1 mb-10">
+        <div className="card-body flex-1 mb-10">
           <StepRenderer
             question={currentQuestion}
             value={currentAnswer}
@@ -132,7 +132,7 @@ export default function SimulateurPage() {
           )}
         </div>
 
-        <div className="flex justify-between items-center gap-4 pt-8 border-t border-border">
+        <div className="card-footer flex justify-between items-center gap-4 pt-8 border-t border-border">
           <Button
             variant="outline"
             onClick={handlePrevious}

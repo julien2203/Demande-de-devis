@@ -16,12 +16,17 @@ function WizardLayoutContent({
   totalSteps,
 }: WizardLayoutProps) {
   const searchParams = useSearchParams();
-  const isEmbed = searchParams?.get("embed") === "1" || searchParams?.get("theme") === "light";
+  const isEmbed =
+    searchParams?.get("embed") === "1" || searchParams?.get("theme") === "light";
 
   if (isEmbed) {
     return (
       <div className="w-full">
-        <QuoteCard currentStep={currentStep} totalSteps={totalSteps}>
+        <QuoteCard
+          currentStep={currentStep}
+          totalSteps={totalSteps}
+          isEmbed
+        >
           {children}
         </QuoteCard>
       </div>
