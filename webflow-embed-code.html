@@ -58,29 +58,16 @@
 </style>
 
 <script>
-  // Ajuster la hauteur de l'iframe automatiquement
+  // Ajuster la hauteur de l'iframe via postMessage
   (function() {
     const iframe = document.getElementById('simulateur-iframe');
     if (!iframe) return;
 
-    // Fallback : ajuster la hauteur après chargement
-    iframe.addEventListener('load', function() {
-      try {
-        // Essayer d'accéder à la hauteur du contenu (nécessite même origine ou CORS)
-        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-        if (iframeDoc) {
-          const height = Math.max(
-            iframeDoc.body.scrollHeight,
-            iframeDoc.body.offsetHeight,
-            iframeDoc.documentElement.clientHeight,
-            iframeDoc.documentElement.scrollHeight,
-            iframeDoc.documentElement.offsetHeight
-          );
-          iframe.style.height = height + 'px';
-        }
-      } catch (e) {
-        // Cross-origin : utiliser une hauteur fixe ou min-height
-        iframe.style.minHeight = '100vh';
+    window.addEventListener('message', function(event) {
+      if (!event.data || event.data.type !== 'EASYWEB_QUOTE_HEIGHT') return;
+      var height = event.data.height;
+      if (typeof height === 'number' && height > 0) {
+        iframe.style.height = height + 'px';
       }
     });
   })();

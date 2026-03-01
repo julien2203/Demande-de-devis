@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect, useMemo, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { WizardLayout } from "@/components/wizard/WizardLayout";
 import { StepRenderer } from "@/components/wizard/StepRenderer";
 import { Button } from "@/components/ui/button";
@@ -12,8 +12,10 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 const allQuestions = questionsData.questions as Question[];
 const STORAGE_KEY = "wizardAnswers";
 
-export default function SimulateurPage() {
+function SimulateurPageContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const isEmbed = searchParams?.get("embed") === "1" || searchParams?.get("theme") === "light";
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<WizardAnswers>(() => {
     // Charger les réponses depuis localStorage au démarrage
@@ -98,7 +100,7 @@ export default function SimulateurPage() {
     } else {
       // Sauvegarder les réponses dans localStorage et rediriger
       localStorage.setItem(STORAGE_KEY, JSON.stringify(answers));
-      router.push("/resultat");
+      router.push(isEmbed ? "/resultat?embed=1" : "/resultat");
     }
   };
 
@@ -155,5 +157,13 @@ export default function SimulateurPage() {
         </div>
       </div>
     </WizardLayout>
+  );
+}
+
+export default function SimulateurPage() {
+  return (
+    <Suspense fallback={null}>
+      <SimulateurPageContent />
+    </Suspense>
   );
 }
